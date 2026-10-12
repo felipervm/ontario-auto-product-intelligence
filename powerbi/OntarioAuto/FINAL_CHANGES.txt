@@ -1,0 +1,1 @@
+Final changes: fixed three DAX data-quality cards with COALESCE; made Quality Check Status and DQ Status Color null-safe; added EXECUTIVE_FINDINGS.md. All report visuals, positions, colors, filters, and navigation retained byte-for-byte. Open OntarioAuto.pbip in Power BI Desktop and confirm the 3 cards display 0. Do not delete your previous working project.

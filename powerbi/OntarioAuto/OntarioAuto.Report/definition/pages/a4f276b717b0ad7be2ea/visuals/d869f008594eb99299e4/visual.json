@@ -1,0 +1,138 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "d869f008594eb99299e4",
+  "position": {
+    "x": 20,
+    "y": 472,
+    "z": 13,
+    "height": 224,
+    "width": 1240,
+    "tabOrder": 13
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Checks and definitions",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#0033A0",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "Left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Duplicate keys: more than one row per period x region x segment x coverage.   Invalid measure rows: exposure or premium <= 0, or claim count / incurred losses < 0.   Missing values: any blank field in a row.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1B2A41",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "Left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Ratios are computed from sums (loss ratio = incurred losses / earned premium; frequency = claims / exposures; severity = losses / claims; pure premium = losses / exposures), never as averages of row-level ratios.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1B2A41",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "Left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Earned exposures are coverage-level units, not distinct insured vehicles. The 2026 frequency uplift for Toronto and GTA Other Collision / Accident Benefits is a modelled scenario assumption, not a finding about the real Ontario market. Loss-ratio colour thresholds (55% / 70%) are a reporting convention for this case study, not regulatory benchmarks.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#5B6B82",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "Left"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
