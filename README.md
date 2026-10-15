@@ -1,75 +1,107 @@
 # Ontario Auto Product Intelligence
 
-**Independent Power BI case study · Ontario automobile insurance · Synthetic data only**
+**From portfolio performance to better decisions.**
 
-An end-to-end provincial product-performance intelligence exercise demonstrating how a product analyst can monitor premium and claims performance, identify deterioration, investigate loss drivers, and validate the reliability of reporting.
+*Independent Power BI case study · Ontario auto insurance · Synthetic data*
 
-> **Portfolio project, not an Allstate Canada project.** All data and modeled effects are fictional; there is no affiliation with, or access to data from, Allstate Canada or any other insurer.
+When an auto insurance portfolio starts underperforming, a higher loss ratio tells you **something changed**—but not **why**, or what to investigate first.
 
-## Report walkthrough
+I created a fictional Ontario auto portfolio and a three-page Power BI report to explore how a Provincial Product Analyst could monitor performance, separate possible claims and premium drivers, and check the reliability of the numbers before recommending action.
 
-| Page | What it answers |
-| --- | --- |
-| **Executive Overview** | Where are premiums, incurred losses, and loss ratio trending? Which regions and coverages warrant investigation? |
-| **Loss Drivers** | Is deterioration driven by claim frequency, claim severity, or premium adequacy? How does it differ by segment? |
-| **Data Quality** | Are quarterly records complete, nonduplicated, numerically valid, and consistent with the source summary? |
+> **Independent portfolio study, not an Allstate Canada project.** All data, trends, and findings are fictional. No insurer data was accessed, and this work is not affiliated with or endorsed by Allstate Canada.
 
-The final Power BI project retains **three pages**, interactive page-navigation controls, year/region/coverage/driver-segment slicers, and DAX measures for quality checks. The screenshots selected for this release show the year 2025 to demonstrate a historical view, while the decision brief compares 2024 to 2026.
+## See the Power BI report
 
-### Key illustrative findings
+No Power BI installation is needed to review these previews. Each image shows one page of the report.
 
-| Metric | 2024 | 2025 | 2026 |
-| --- | ---: | ---: | ---: |
-| Earned premium | CAD $64.54M | CAD $70.89M | CAD $74.39M |
-| Incurred losses | CAD $35.82M | CAD $39.98M | CAD $46.47M |
-| Loss ratio | **55.5%** | **56.4%** | **62.5%** |
+### 01 · Executive Overview — Where is performance changing?
 
-The modeled loss ratio increases by approximately **7 percentage points** from 2024 to 2026. This is a scenario result, **not** evidence that Ontario insurers' actual performance changed by this amount.
+Track earned premium, incurred losses, and loss ratio, then compare regions and coverages to identify areas worth investigating.
 
-### Quality controls
+![Power BI Executive Overview dashboard showing Ontario auto insurance performance](assets/screenshots/executive-overview.png)
 
-- 720 rows: **12 quarters × 5 regions × 3 driver segments × 4 coverages**
-- No duplicate observation keys
-- No missing values or invalid numeric records
-- Three Power BI data-quality cards show **0**, and the quality status displays **ALL PASSED**
-- Annual premium, loss, and claim totals reconcile to an independently aggregated CSV
+### 02 · Loss Drivers — What might explain the change?
 
-## Run the data pipeline
+Look beyond a single loss ratio. Examine claim frequency, claim severity, premium adequacy, and how patterns differ by region, coverage, and driver segment.
 
-Requires Python 3.10+; no third-party packages.
+![Power BI Loss Drivers dashboard for a synthetic Ontario auto insurance portfolio](assets/screenshots/loss-drivers.png)
+
+### 03 · Data Quality — Can we trust the numbers?
+
+Before drawing conclusions, verify that the underlying records are complete, unique, numerically valid, and consistent with independent summaries.
+
+![Power BI Data Quality dashboard with validation checks](assets/screenshots/data-quality.png)
+
+## An illustrative finding
+
+In the fictional dataset, earned premium rises between 2024 and 2026—but incurred losses rise faster.
+
+| Portfolio measure | 2024 | 2026 |
+| --- | ---: | ---: |
+| Earned premium | CAD $64.54M | CAD $74.39M |
+| Incurred losses | CAD $35.82M | CAD $46.47M |
+| **Loss ratio** | **55.5%** | **62.5%** |
+
+**The decision is not simply “fix the loss ratio.”** A product team would first investigate which regions and coverages contributed to deterioration, how claim frequency and severity changed, whether portfolio mix or premium adequacy played a role, and whether the data is sufficiently reliable.
+
+These are deliberately modeled results—not real Ontario market trends, not Allstate performance, and not evidence supporting an actual pricing change.
+
+[**Read the two-minute executive decision brief →**](docs/EXECUTIVE_DECISION_BRIEF.md)
+
+## What this demonstrates
+
+- **Performance monitoring:** surface KPI trends and areas requiring attention
+- **Business analysis:** move from an aggregate change toward possible underlying drivers
+- **Decision support:** suggest next investigations instead of overstating causation
+- **Reporting integrity:** validate data before communicating conclusions
+- **Clear communication:** make the findings accessible to non-technical stakeholders
+
+## How the study was built
+
+I created **720 synthetic quarterly observations** covering 12 quarters, five Ontario regions, three driver segments, and four coverages. Python generates and validates the dataset; the Power BI report contains three pages with filters and analytical measures. Separate SQL checks and a reproducible aggregation provide additional quality assurance.
+
+The synthetic scenario contains **zero missing values, zero duplicate observation keys, and zero invalid numeric records**. Annual premium, losses, and claims reconcile against separately aggregated summaries.
+
+### Explore the supporting work
+
+- [Executive decision brief](docs/EXECUTIVE_DECISION_BRIEF.md) — findings, limitations, and recommended investigations
+- [Power BI project](powerbi/OntarioAuto/) — editable Power BI Desktop project
+- [Python data generator](scripts/generate.py) and [analysis/validation](scripts/analyze.py)
+- [SQL quality checks](sql/quality_checks.sql) and [Power BI measures](powerbi/MEASURES.md)
+
+<details>
+<summary><strong>Technical notes & reproducibility</strong></summary>
+
+Requires Python 3.10+ with no third-party Python dependencies for the data pipeline.
 
 ```powershell
 python scripts/generate.py
 python scripts/analyze.py
 ```
 
-The pipeline produces `data/synthetic_ontario_auto_quarterly.csv` and `data/regional_year_summary.csv`. Outputs are ignored by Git; they are reproducible using seed 42.
+The commands produce `data/synthetic_ontario_auto_quarterly.csv` and `data/regional_year_summary.csv`. Generated outputs are excluded from Git, but can be reproduced with seed 42.
 
-## Power BI report
+The Power BI report uses a Power BI Project (PBIP), not a hosted web app. To interact with it locally, open `powerbi/OntarioAuto/OntarioAuto.pbip` in Power BI Desktop and refresh the CSV source if requested. The screenshots above are for immediate visual review.
 
-The working report was developed in **Power BI Desktop** and is maintained as a **Power BI Project (PBIP)**. The interactive `.pbip` project is a Power BI Desktop artifact, not a hosted web application. To review it locally, open its `.pbip` file in Power BI Desktop and refresh the local synthetic CSV source if prompted.
+**Analytical definitions**
 
-> Source artifact upload and screenshot assets are tracked separately. A link or preview should only be considered available after those binary files appear in this repository.
+- Loss ratio = incurred losses / earned premium
+- Claim frequency = claim count / earned exposures
+- Claim severity = incurred losses / claim count
+- Pure premium = incurred losses / earned exposures
 
-## Analytical definitions
+Ratios are calculated as ratios of sums rather than averages of row-level ratios. Exposure counts are coverage-specific, not counts of distinct insured vehicles across coverages.
 
-- **Loss ratio** = incurred losses / earned premium
-- **Claim frequency** = claim count / earned exposures
-- **Claim severity** = incurred losses / claim count
-- **Pure premium** = incurred losses / earned exposures
+</details>
 
-All ratios use **ratios of sums**, not averages of row-level ratios. Earned exposures are coverage-level exposure units and must not be interpreted as distinct insured vehicles when summed across coverages.
+## Limits of this case study
 
-## Files and documentation
+The dataset intentionally introduces fictional claims deterioration, particularly in 2026 GTA-area collision and accident-benefits cohorts. The dashboard is an **investigation aid**, not proof of a cause or a basis for real pricing or underwriting decisions. Actual actions would require mature claims, loss-development analysis, comparable exposures, actuarial review, business constraints, and applicable regulatory considerations.
 
-- [Executive decision brief](docs/EXECUTIVE_DECISION_BRIEF.md) — key findings, questions, and limitations
-- [Data generator](scripts/generate.py) — reproducible synthetic source
-- [Validation and aggregation](scripts/analyze.py) — data checks and regional-year KPI summary
-- [SQL QA checks](sql/quality_checks.sql) — optional independent checks
-- [Power BI measures reference](powerbi/MEASURES.md) — base metric logic
+---
 
-## Scope and limitations
+**Felipe Mattos** · Independent portfolio case study
 
-Synthetic claims effects are intentionally injected into the scenario, especially for 2026 GTA-area collision and accident-benefits cohorts. The dashboard supports investigation, not causal attribution or actual pricing changes. A real pricing recommendation would require mature claims, loss-development review, exposure comparability, actuarial credibility, business constraints, and relevant regulatory requirements.
+I am interested in analytics that connects data quality, business performance, and practical decisions.
 
-**Author:** Felipe Mattos · Independent portfolio case study
+[LinkedIn](https://www.linkedin.com/in/felipervm) · [GitHub](https://github.com/felipervm)
